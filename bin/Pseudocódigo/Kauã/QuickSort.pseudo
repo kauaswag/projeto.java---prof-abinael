@@ -1,0 +1,63 @@
+Algoritmo "QuickSort"
+
+Var
+    numeros: vetor[1..5] de inteiro = (9, 5, 1, 4, 3)
+    i: inteiro
+
+Procedimento trocar(var v: vetor de inteiro; i, j: inteiro)
+Var
+    temp: inteiro
+Inicio
+    temp <- v[i]
+    v[i] <- v[j]
+    v[j] <- temp
+FimProcedimento
+
+Funcao particionar(var v: vetor de inteiro; inicio, fim: inteiro): inteiro
+Var
+    pivo, i, j: inteiro
+Inicio
+    pivo <- v[fim]
+    i <- inicio - 1
+
+    Para j de inicio ate fim - 1 faca
+        Se v[j] <= pivo entao
+            i <- i + 1
+            trocar(v, i, j)
+        FimSe
+    FimPara
+
+    trocar(v, i + 1, fim)
+    particionar <- i + 1
+FimFuncao
+
+Procedimento quickSort(var v: vetor de inteiro; inicio, fim: inteiro)
+Var
+    indicePivo: inteiro
+Inicio
+    Se inicio < fim entao
+        indicePivo <- particionar(v, inicio, fim)
+        quickSort(v, inicio, indicePivo - 1)
+        quickSort(v, indicePivo + 1, fim)
+    FimSe
+FimProcedimento
+
+Procedimento imprimirArray(v: vetor de inteiro; tamanho: inteiro)
+Var
+    k: inteiro
+Inicio
+    Para k de 1 ate tamanho faca
+        Escreva(v[k], " ")
+    FimPara
+    Escreval("")
+FimProcedimento
+
+Inicio
+    Escreval("Array original:")
+    imprimirArray(numeros, 5)
+
+    quickSort(numeros, 1, 5)
+
+    Escreval("Array ordenado:")
+    imprimirArray(numeros, 5)
+Fimalgoritmo

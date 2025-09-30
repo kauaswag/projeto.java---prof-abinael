@@ -1,0 +1,111 @@
+Algoritmo "Kruskal"
+
+Const
+    MAX_VERTICES = 6
+    MAX_ARESTAS = 20
+
+Tipo
+    Aresta = Registro
+        origem, destino, peso: inteiro
+    FimRegistro
+
+Var
+    vertices, numArestas, i, j, custoTotal: inteiro
+    arestas, resultado: vetor[1..MAX_ARESTAS] de Aresta
+    pai, rank: vetor[0..MAX_VERTICES-1] de inteiro
+
+Funcao encontrarPai(pai: vetor de inteiro; i: inteiro): inteiro
+Var
+    p: inteiro
+Inicio
+    Se pai[i] <> i entao
+        pai[i] <- encontrarPai(pai, pai[i])
+    FimSe
+    encontrarPai <- pai[i]
+FimFuncao
+
+Procedimento unir(var pai: vetor de inteiro; var rank: vetor de inteiro; x, y: inteiro)
+Var
+    raizX, raizY: inteiro
+Inicio
+    raizX <- encontrarPai(pai, x)
+    raizY <- encontrarPai(pai, y)
+
+    Se rank[raizX] < rank[raizY] entao
+        pai[raizX] <- raizY
+    Senao
+        Se rank[raizX] > rank[raizY] entao
+            pai[raizY] <- raizX
+        Senao
+            pai[raizY] <- raizX
+            rank[raizX] <- rank[raizX] + 1
+        FimSe
+    FimSe
+FimProcedimento
+
+Procedimento ordenarArestas(var arestas: vetor de Aresta; n: inteiro)
+Var
+    i, j: inteiro
+    temp: Aresta
+Inicio
+    Para i de 1 ate n-1 faca
+        Para j de 1 ate n-i faca
+            Se arestas[j].peso > arestas[j+1].peso entao
+                temp <- arestas[j]
+                arestas[j] <- arestas[j+1]
+                arestas[j+1] <- temp
+            FimSe
+        FimPara
+    FimPara
+FimProcedimento
+
+Procedimento kruskal()
+Var
+    i, raizOrigem, raizDestino, qtdResultado: inteiro
+Inicio
+    Para i de 0 ate vertices-1 faca
+        pai[i] <- i
+        rank[i] <- 0
+    FimPara
+
+    ordenarArestas(arestas, numArestas)
+
+    qtdResultado <- 0
+    custoTotal <- 0
+
+    Para i de 1 ate numArestas faca
+        raizOrigem <- encontrarPai(pai, arestas[i].origem)
+        raizDestino <- encontrarPai(pai, arestas[i].destino)
+
+        Se raizOrigem <> raizDestino entao
+            qtdResultado <- qtdResultado + 1
+            resultado[qtdResultado] <- arestas[i]
+            unir(pai, rank, raizOrigem, raizDestino)
+        FimSe
+    FimPara
+
+    Escreval("Arestas da Árvore Geradora Mínima (Kruskal):")
+    Para i de 1 ate qtdResultado faca
+        Escreval(resultado[i].origem, " - ", resultado[i].destino, " : ", resultado[i].peso)
+        custoTotal <- custoTotal + resultado[i].peso
+    FimPara
+
+    Escreval("Custo total: ", custoTotal)
+FimProcedimento
+
+Inicio
+    vertices <- MAX_VERTICES
+    numArestas <- 9
+
+    arestas[1].origem <- 0; arestas[1].destino <- 1; arestas[1].peso <- 4
+    arestas[2].origem <- 0; arestas[2].destino <- 2; arestas[2].peso <- 4
+    arestas[3].origem <- 1; arestas[3].destino <- 2; arestas[3].peso <- 2
+    arestas[4].origem <- 1; arestas[4].destino <- 3; arestas[4].peso <- 5
+    arestas[5].origem <- 2; arestas[5].destino <- 3; arestas[5].peso <- 5
+    arestas[6].origem <- 2; arestas[6].destino <- 4; arestas[6].peso <- 11
+    arestas[7].origem <- 3; arestas[7].destino <- 4; arestas[7].peso <- 2
+    arestas[8].origem <- 3; arestas[8].destino <- 5; arestas[8].peso <- 1
+    arestas[9].origem <- 4; arestas[9].destino <- 5; arestas[9].peso <- 7
+
+    kruskal()
+Fimalgoritmo

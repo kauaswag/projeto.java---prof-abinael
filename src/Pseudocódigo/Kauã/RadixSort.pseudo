@@ -1,0 +1,85 @@
+Algoritmo "RadixSort"
+
+Const
+    MAX = 8
+
+Var
+    numeros: vetor[1..MAX] de inteiro = (170, 45, 75, 90, 802, 24, 2, 66)
+    i: inteiro
+
+Funcao getMax(v: vetor de inteiro; tamanho: inteiro): inteiro
+Var
+    max, i: inteiro
+Inicio
+    max <- v[1]
+    Para i de 2 ate tamanho faca
+        Se v[i] > max entao
+            max <- v[i]
+        FimSe
+    FimPara
+    getMax <- max
+FimFuncao
+
+Procedimento countingSort(var v: vetor de inteiro; tamanho, exp: inteiro)
+Var
+    output: vetor[1..MAX] de inteiro
+    count: vetor[0..9] de inteiro
+    i, digito: inteiro
+Inicio
+
+    Para i de 0 ate 9 faca
+        count[i] <- 0
+    FimPara
+
+    Para i de 1 ate tamanho faca
+        digito <- (v[i] div exp) mod 10
+        count[digito] <- count[digito] + 1
+    FimPara
+
+    Para i de 1 ate 9 faca
+        count[i] <- count[i] + count[i-1]
+    FimPara
+
+    Para i de tamanho ate 1 passo -1 faca
+        digito <- (v[i] div exp) mod 10
+        output[count[digito]] <- v[i]
+        count[digito] <- count[digito] - 1
+    FimPara
+
+    Para i de 1 ate tamanho faca
+        v[i] <- output[i]
+    FimPara
+FimProcedimento
+
+Procedimento radixSort(var v: vetor de inteiro; tamanho: inteiro)
+Var
+    max, exp: inteiro
+Inicio
+    max <- getMax(v, tamanho)
+    exp <- 1
+
+    Enquanto (max div exp) > 0 faca
+        countingSort(v, tamanho, exp)
+        exp <- exp * 10
+    FimEnquanto
+FimProcedimento
+
+Procedimento imprimirArray(v: vetor de inteiro; tamanho: inteiro)
+Var
+    i: inteiro
+Inicio
+    Para i de 1 ate tamanho faca
+        Escreva(v[i], " ")
+    FimPara
+    Escreval("")
+FimProcedimento
+
+Inicio
+    Escreval("Array original:")
+    imprimirArray(numeros, MAX)
+
+    radixSort(numeros, MAX)
+
+    Escreval("Array ordenado:")
+    imprimirArray(numeros, MAX)
+Fimalgoritmo

@@ -1,0 +1,111 @@
+Algoritmo "Tarjan_SCC"
+
+Const
+    MAX = 8
+
+Var
+    vertices, tempo: inteiro
+    adj: vetor[1..MAX] de vetor de inteiro
+    ids, low: vetor[1..MAX] de inteiro
+    naPilha: vetor[1..MAX] de logico
+    pilha: vetor[1..MAX] de inteiro
+    topoPilha: inteiro
+    i: inteiro
+
+Procedimento inicializar()
+Var
+    i: inteiro
+Inicio
+    vertices <- MAX
+    tempo <- 0
+    topoPilha <- 0
+
+    Para i de 1 ate vertices faca
+        ids[i] <- -1
+        low[i] <- 0
+        naPilha[i] <- falso
+        adj[i] <- vetorVazio()
+    FimPara
+FimProcedimento
+
+Procedimento adicionarAresta(origem, destino: inteiro)
+Inicio
+    adj[origem] <- adicionarFim(adj[origem], destino)
+FimProcedimento
+
+Procedimento pushPilha(v: inteiro)
+Inicio
+    topoPilha <- topoPilha + 1
+    pilha[topoPilha] <- v
+FimProcedimento
+
+Funcao popPilha(): inteiro
+Var
+    v: inteiro
+Inicio
+    v <- pilha[topoPilha]
+    topoPilha <- topoPilha - 1
+    popPilha <- v
+FimFuncao
+
+Procedimento dfs(u: inteiro)
+Var
+    v: inteiro
+    i: inteiro
+Inicio
+    ids[u] <- tempo
+    low[u] <- tempo
+    tempo <- tempo + 1
+
+    pushPilha(u)
+    naPilha[u] <- verdadeiro
+
+    Para i de 1 ate tamanho(adj[u]) faca
+        v <- adj[u][i]
+        Se ids[v] = -1 entao
+            dfs(v)
+            Se low[v] < low[u] entao
+                low[u] <- low[v]
+            FimSe
+        Senao se naPilha[v] = verdadeiro entao
+            Se ids[v] < low[u] entao
+                low[u] <- ids[v]
+            FimSe
+        FimSe
+    FimPara
+
+    Se low[u] = ids[u] entao
+        Escreval("Componente fortemente conexa:")
+        Enquanto verdadeiro faca
+            v <- popPilha()
+            naPilha[v] <- falso
+            Escreva(v - 1, " ")
+            Se v = u entao
+                Pare
+            FimSe
+        FimEnquanto
+        Escreval("")
+    FimSe
+FimProcedimento
+
+Inicio
+    inicializar()
+
+    adicionarAresta(1, 2)
+    adicionarAresta(2, 3)
+    adicionarAresta(3, 1)
+    adicionarAresta(4, 2)
+    adicionarAresta(4, 3)
+    adicionarAresta(5, 4)
+    adicionarAresta(5, 6)
+    adicionarAresta(6, 7)
+    adicionarAresta(7, 5)
+    adicionarAresta(7, 8)
+
+    Para i de 1 ate vertices faca
+        Se ids[i] = -1 entao
+            dfs(i)
+        FimSe
+    FimPara
+
+FimAlgoritmo

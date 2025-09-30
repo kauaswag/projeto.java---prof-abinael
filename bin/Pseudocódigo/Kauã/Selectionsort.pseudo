@@ -1,0 +1,43 @@
+Algoritmo "SelectionSort"
+
+Var
+    numeros: vetor[1..5] de inteiro = (64, 25, 12, 22, 11)
+    i, j, n, minIndex, temp: inteiro
+
+Procedimento selectionSort(var v: vetor de inteiro; tamanho: inteiro)
+Inicio
+    Para i de 1 ate tamanho - 1 faca
+        minIndex <- i
+        Para j de i + 1 ate tamanho faca
+            Se v[j] < v[minIndex] entao
+                minIndex <- j
+            FimSe
+        FimPara
+
+        temp <- v[minIndex]
+        v[minIndex] <- v[i]
+        v[i] <- temp
+    FimPara
+FimProcedimento
+
+Procedimento imprimirArray(v: vetor de inteiro; tamanho: inteiro)
+Var
+    k: inteiro
+Inicio
+    Para k de 1 ate tamanho faca
+        Escreva(v[k], " ")
+    FimPara
+    Escreval("")
+FimProcedimento
+
+Inicio
+    n <- 5
+
+    Escreval("Array original:")
+    imprimirArray(numeros, n)
+
+    selectionSort(numeros, n)
+
+    Escreval("Array ordenado:")
+    imprimirArray(numeros, n)
+Fimalgoritmo

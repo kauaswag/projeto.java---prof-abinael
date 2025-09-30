@@ -1,0 +1,63 @@
+Algoritmo OrdenacaoTopologicaDFS
+    Constante MAX = 6
+    Variáveis
+        adj : vetor de lista[1..MAX] de inteiro
+        visitado : vetor[1..MAX] de lógico
+        pilha : vetor[1..MAX] de inteiro
+        topo : inteiro
+
+    Procedimento InicializarGrafo()
+        Para i de 1 até MAX faça
+            adj[i] <- lista vazia
+            visitado[i] <- falso
+        fimPara
+        topo <- 0
+    FimProcedimento
+
+    Procedimento AdicionarAresta(origem, destino: inteiro)
+
+        adicionarFim(adj[origem], destino)
+    FimProcedimento
+
+    Procedimento DFS(u: inteiro)
+        visitado[u] <- verdadeiro
+        Para cada vizinho em adj[u] faça
+            Se visitado[vizinho] = falso então
+                DFS(vizinho)
+            fimSe
+        fimPara
+        topo <- topo + 1
+        pilha[topo] <- u
+    FimProcedimento
+
+    Procedimento OrdenacaoTopologica()
+        Para i de 1 até MAX faça
+            Se visitado[i] = falso então
+                DFS(i)
+            fimSe
+        fimPara
+
+        Escreva("Ordenação Topológica (DFS):")
+        Para i de topo até 1 passo -1 faça
+            Escreva(pilha[i], " ")
+        fimPara
+        EscrevaL()
+    FimProcedimento
+
+
+    Procedimento adicionarFim(var lista: lista de inteiro, valor: inteiro)
+
+    FimProcedimento
+
+Inicio
+    InicializarGrafo()
+
+    AdicionarAresta(6, 3) // 5->2 no Java (índice +1)
+    AdicionarAresta(6, 1) // 5->0
+    AdicionarAresta(5, 1) // 4->0
+    AdicionarAresta(5, 2) // 4->1
+    AdicionarAresta(3, 4) // 2->3
+    AdicionarAresta(4, 2) // 3->1
+
+    OrdenacaoTopologica()
+FimAlgoritmo

@@ -1,0 +1,40 @@
+Algoritmo "InsertionSort"
+
+Var
+    numeros: vetor[1..5] de inteiro = (9, 5, 1, 4, 3)
+    i, j, chave: inteiro
+
+Procedimento imprimirArray(v: vetor de inteiro; tamanho: inteiro)
+Var
+    k: inteiro
+Inicio
+    Para k de 1 ate tamanho faca
+        Escreva(v[k], " ")
+    FimPara
+    Escreval("")
+FimProcedimento
+
+Procedimento insertionSort(v: vetor de inteiro; tamanho: inteiro)
+Inicio
+    Para i de 2 ate tamanho faca
+        chave <- v[i]
+        j <- i - 1
+
+        Enquanto (j >= 1) e (v[j] > chave) faca
+            v[j + 1] <- v[j]
+            j <- j - 1
+        FimEnquanto
+
+        v[j + 1] <- chave
+    FimPara
+FimProcedimento
+
+Inicio
+    Escreval("Array original:")
+    imprimirArray(numeros, 5)
+
+    insertionSort(numeros, 5)
+
+    Escreval("Array ordenado:")
+    imprimirArray(numeros, 5)
+Fimalgoritmo
