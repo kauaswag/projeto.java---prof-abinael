@@ -1,0 +1,78 @@
+INÍCIO
+
+    // Número de vértices
+    ESCREVA "Digite o número de vértices:"
+    LEIA V
+
+    // Criar grafo como matriz de adjacência
+    CRIE matriz grafo[0..V-1][0..V-1] COM 0
+
+    // Número de arestas
+    ESCREVA "Digite o número de arestas:"
+    LEIA E
+
+    // Preencher arestas com pesos
+    PARA i DE 1 ATÉ E FAÇA
+        ESCREVA "Digite a aresta ", i, " (origem destino peso):"
+        LEIA origem, destino, peso
+        grafo[origem][destino] <- peso
+    FIMPARA
+
+    // Vértice inicial
+    ESCREVA "Digite o vértice inicial:"
+    LEIA inicio
+
+    // Executar Dijkstra
+    distancias <- DIJKSTRA(grafo, inicio, V)
+
+    // Exibir resultado
+    ESCREVA "Distâncias mínimas a partir do vértice ", inicio, ":"
+    PARA i DE 0 ATÉ V-1 FAÇA
+        ESCREVA "Vértice ", i, ": ", distancias[i]
+    FIMPARA
+
+FIM
+
+
+ALGORITMO DIJKSTRA(grafo, inicio, V)
+    CRIE vetor dist[0..V-1]
+    CRIE vetor visitado[0..V-1]
+
+    // Inicializar distâncias com infinito
+    PARA i DE 0 ATÉ V-1 FAÇA
+        dist[i] <- INFINITO
+        visitado[i] <- FALSO
+    FIMPARA
+
+    dist[inicio] <- 0
+
+    // Repetir V-1 vezes
+    PARA cont DE 1 ATÉ V-1 FAÇA
+        u <- MIN_DIST(dist, visitado, V)   // pega vértice com menor distância
+        visitado[u] <- VERDADEIRO
+
+        // Atualizar distâncias dos vizinhos de u
+        PARA v DE 0 ATÉ V-1 FAÇA
+            SE (visitado[v] = FALSO) E (grafo[u][v] ≠ 0) E (dist[u] ≠ INFINITO) E (dist[u] + grafo[u][v] < dist[v]) ENTÃO
+                dist[v] <- dist[u] + grafo[u][v]
+            FIMSE
+        FIMPARA
+    FIMPARA
+
+    RETORNE dist
+FIMALGORITMO
+
+
+ALGORITMO MIN_DIST(dist, visitado, V)
+    min <- INFINITO
+    minIndex <- -1
+
+    PARA i DE 0 ATÉ V-1 FAÇA
+        SE (visitado[i] = FALSO) E (dist[i] <= min) ENTÃO
+            min <- dist[i]
+            minIndex <- i
+        FIMSE
+    FIMPARA
+
+    RETORNE minIndex
+FIMALGORITMO

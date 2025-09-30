@@ -1,0 +1,47 @@
+INÍCIO
+
+    // Solicitar tamanho do vetor
+    ESCREVA "Digite o tamanho do vetor:"
+    LEIA n
+
+    // Criar vetor
+    CRIE vetor v[1..n]
+
+    // Preencher o vetor
+    PARA i DE 1 ATÉ n FAÇA
+        ESCREVA "Digite o elemento ", i, ":"
+        LEIA v[i]
+    FIMPARA
+
+    // Exibir vetor original
+    ESCREVA "Vetor original: "
+    PARA i DE 1 ATÉ n FAÇA
+        ESCREVA v[i], " "
+    FIMPARA
+
+    // Bubble Sort
+    PARA i DE 1 ATÉ n-1 FAÇA
+        trocou <- FALSO
+
+        PARA j DE 1 ATÉ n-1-i FAÇA
+            SE v[j] > v[j+1] ENTÃO
+                temp <- v[j]
+                v[j] <- v[j+1]
+                v[j+1] <- temp
+                trocou <- VERDADEIRO
+            FIMSE
+        FIMPARA
+
+        // Se não houve troca, já está ordenado
+        SE trocou = FALSO ENTÃO
+            PARE
+        FIMSE
+    FIMPARA
+
+    // Exibir vetor ordenado
+    ESCREVA "Vetor ordenado: "
+    PARA i DE 1 ATÉ n FAÇA
+        ESCREVA v[i], " "
+    FIMPARA
+
+FIM

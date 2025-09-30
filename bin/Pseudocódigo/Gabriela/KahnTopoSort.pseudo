@@ -1,0 +1,68 @@
+INÍCIO
+
+    // Ler número de vértices
+    ESCREVA "Digite o número de vértices:"
+    LEIA V
+
+    // Criar lista de adjacência
+    CRIE grafo[0..V-1] COMO LISTAS VAZIAS
+
+    // Ler número de arestas
+    ESCREVA "Digite o número de arestas:"
+    LEIA E
+
+    // Preencher arestas
+    PARA i DE 1 ATÉ E FAÇA
+        ESCREVA "Digite a aresta ", i, " (origem destino):"
+        LEIA origem, destino
+        ADICIONE destino NA LISTA grafo[origem]
+    FIMPARA
+
+    // Executar Kahn
+    ordenacao <- KAHN_TOPO_SORT(grafo, V)
+
+    // Mostrar resultado
+    ESCREVA "Ordenação topológica: "
+    PARA i DE 0 ATÉ V-1 FAÇA
+        ESCREVA ordenacao[i], " "
+    FIMPARA
+
+FIM
+
+
+ALGORITMO KAHN_TOPO_SORT(grafo, V)
+    CRIE vetor grauEntrada[0..V-1] <- 0
+    CRIE vetor topo[0..V-1]
+    index <- 0
+
+    // Calcular grau de entrada
+    PARA u DE 0 ATÉ V-1 FAÇA
+        PARA cada v EM grafo[u] FAÇA
+            grauEntrada[v] <- grauEntrada[v] + 1
+        FIMPARA
+    FIMPARA
+
+    // Criar fila com vértices de grau 0
+    CRIE fila VAZIA
+    PARA i DE 0 ATÉ V-1 FAÇA
+        SE grauEntrada[i] = 0 ENTÃO
+            INSIRA i NA fila
+        FIMSE
+    FIMPARA
+
+    // Processar vértices
+    ENQUANTO fila NÃO ESTIVER VAZIA FAÇA
+        u <- REMOVA DA fila
+        topo[index] <- u
+        index <- index + 1
+
+        PARA cada v EM grafo[u] FAÇA
+            grauEntrada[v] <- grauEntrada[v] - 1
+            SE grauEntrada[v] = 0 ENTÃO
+                INSIRA v NA fila
+            FIMSE
+        FIMPARA
+    FIMENQUANTO
+
+    RETORNE topo
+FIMALGORITMO

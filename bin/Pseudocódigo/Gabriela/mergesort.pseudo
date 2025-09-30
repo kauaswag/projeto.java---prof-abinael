@@ -1,0 +1,73 @@
+Algoritmo MergeSort
+Início
+    Ler n (tamanho do vetor)
+    Criar vetor V[n]
+
+    Para i de 0 até n-1 faça
+        Ler V[i]
+    FimPara
+
+    Exibir "Vetor original", V
+
+    Chamar mergeSort(V, 0, n-1)
+
+    Exibir "Vetor ordenado", V
+Fim
+
+
+Procedimento mergeSort(V, esquerda, direita)
+    Se esquerda < direita então
+        meio ← (esquerda + direita) / 2
+
+        // Ordena metade esquerda
+        mergeSort(V, esquerda, meio)
+
+        // Ordena metade direita
+        mergeSort(V, meio+1, direita)
+
+        // Une as duas metades
+        merge(V, esquerda, meio, direita)
+    FimSe
+Fim
+
+
+Procedimento merge(V, esquerda, meio, direita)
+    n1 ← meio - esquerda + 1
+    n2 ← direita - meio
+
+    Criar vetor L[0..n1-1]
+    Criar vetor R[0..n2-1]
+
+    Para i de 0 até n1-1 faça
+        L[i] ← V[esquerda + i]
+    FimPara
+
+    Para j de 0 até n2-1 faça
+        R[j] ← V[meio + 1 + j]
+    FimPara
+
+    i ← 0, j ← 0, k ← esquerda
+
+    Enquanto i < n1 e j < n2 faça
+        Se L[i] ≤ R[j] então
+            V[k] ← L[i]
+            i ← i + 1
+        Senão
+            V[k] ← R[j]
+            j ← j + 1
+        FimSe
+        k ← k + 1
+    FimEnquanto
+
+    Enquanto i < n1 faça
+        V[k] ← L[i]
+        i ← i + 1
+        k ← k + 1
+    FimEnquanto
+
+    Enquanto j < n2 faça
+        V[k] ← R[j]
+        j ← j + 1
+        k ← k + 1
+    FimEnquanto
+Fim

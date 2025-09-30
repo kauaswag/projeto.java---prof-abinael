@@ -1,0 +1,49 @@
+INÍCIO
+
+    // Solicitar número de vértices
+    ESCREVA "Digite o número de vértices do grafo:"
+    LEIA V
+
+    // Criar lista de adjacência
+    CRIE grafo[0..V-1] COMO LISTAS VAZIAS
+
+    // Solicitar número de arestas
+    ESCREVA "Digite o número de arestas:"
+    LEIA E
+
+    // Preencher arestas
+    PARA i DE 1 ATÉ E FAÇA
+        ESCREVA "Digite a aresta ", i, " (formato: origem destino):"
+        LEIA origem, destino
+        ADICIONE destino NA LISTA grafo[origem]
+        // Se o grafo for não-direcionado:
+        // ADICIONE origem NA LISTA grafo[destino]
+    FIMPARA
+
+    // Solicitar vértice inicial
+    ESCREVA "Digite o vértice inicial para DFS:"
+    LEIA inicio
+
+    // Inicializar vetor de visitados
+    CRIE visitado[0..V-1] <- FALSO
+    ordem <- ""
+
+    // Executar DFS
+    CHAME DFS(inicio)
+
+    // Exibir ordem de visitação
+    ESCREVA "Ordem de visitação DFS: ", ordem
+
+FIM
+
+
+ALGORITMO DFS(v)
+    visitado[v] <- VERDADEIRO
+    ordem <- ordem + v + " "
+
+    PARA cada vizinho EM grafo[v] FAÇA
+        SE visitado[vizinho] = FALSO ENTÃO
+            CHAME DFS(vizinho)
+        FIMSE
+    FIMPARA
+FIMALGORITMO

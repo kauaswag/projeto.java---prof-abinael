@@ -1,0 +1,62 @@
+Algoritmo Kosaraju
+Início
+    Ler V (número de vértices)
+    Criar lista de adjacência 'grafo' com V listas vazias
+
+    Ler E (número de arestas)
+    Para i de 1 até E faça
+        Ler origem e destino
+        Adicionar destino na lista de adjacência de origem
+    FimPara
+
+    Criar vetor visitado[V] inicializado com falso
+    Criar pilha vazia
+
+    // Primeira DFS - preencher pilha com ordem de finalização
+    Para i de 0 até V-1 faça
+        Se visitado[i] = falso então
+            Chamar DFS1(i)
+        FimSe
+    FimPara
+
+    // Criar grafo transposto
+    Criar lista 'transposto' com V listas vazias
+    Para cada u em 0 até V-1 faça
+        Para cada v em grafo[u] faça
+            Adicionar u em transposto[v]
+        FimPara
+    FimPara
+
+    // Segunda DFS - encontrar componentes fortemente conectados
+    Reinicializar visitado[V] como falso
+    Enquanto pilha não estiver vazia faça
+        v ← pilha.desempilhar()
+        Se visitado[v] = falso então
+            Criar lista 'componente'
+            Chamar DFS2(v, componente)
+            Exibir 'componente'
+        FimSe
+    FimEnquanto
+Fim
+
+
+Procedimento DFS1(vértice v)
+    Marcar visitado[v] = verdadeiro
+    Para cada u em grafo[v] faça
+        Se visitado[u] = falso então
+            Chamar DFS1(u)
+        FimSe
+    FimPara
+    Empilhar v na pilha
+Fim
+
+
+Procedimento DFS2(vértice v, lista componente)
+    Marcar visitado[v] = verdadeiro
+    Adicionar v em 'componente'
+    Para cada u em transposto[v] faça
+        Se visitado[u] = falso então
+            Chamar DFS2(u, componente)
+        FimSe
+    FimPara
+Fim

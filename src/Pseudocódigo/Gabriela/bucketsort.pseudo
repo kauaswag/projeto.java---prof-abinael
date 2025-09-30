@@ -1,0 +1,54 @@
+INÍCIO
+
+    // Solicitar o tamanho do vetor
+    ESCREVA "Digite o tamanho do vetor:"
+    LEIA n
+
+    CRIE vetor v[1..n] DE REAL
+
+    // Preencher o vetor
+    PARA i DE 1 ATÉ n FAÇA
+        ESCREVA "Digite o elemento ", i, " (entre 0 e 1):"
+        LEIA v[i]
+    FIMPARA
+
+    // Exibir vetor original
+    ESCREVA "Vetor original: "
+    PARA i DE 1 ATÉ n FAÇA
+        ESCREVA v[i], " "
+    FIMPARA
+
+    // Criar baldes (listas)
+    numBaldes <- n
+    CRIE baldes[1..numBaldes] COMO LISTA DE REAIS VAZIA
+
+    // Distribuir elementos nos baldes
+    PARA i DE 1 ATÉ n FAÇA
+        indiceBalde <- INTEIRO(v[i] * numBaldes)
+        SE indiceBalde = numBaldes ENTÃO
+            indiceBalde <- indiceBalde - 1
+        FIMSE
+        INSIRA v[i] EM baldes[indiceBalde]
+    FIMPARA
+
+    // Ordenar cada balde individualmente
+    PARA i DE 1 ATÉ numBaldes FAÇA
+        ORDENE baldes[i] EM ORDEM CRESCENTE
+    FIMPARA
+
+    // Concatenar baldes no vetor original
+    index <- 1
+    PARA i DE 1 ATÉ numBaldes FAÇA
+        PARA cada elemento num EM baldes[i] FAÇA
+            v[index] <- num
+            index <- index + 1
+        FIMPARA
+    FIMPARA
+
+    // Exibir vetor ordenado
+    ESCREVA "Vetor ordenado: "
+    PARA i DE 1 ATÉ n FAÇA
+        ESCREVA v[i], " "
+    FIMPARA
+
+FIM

@@ -1,0 +1,56 @@
+INÍCIO
+
+    // Solicitar o tamanho do vetor
+    ESCREVA "Digite o tamanho do vetor:"
+    LEIA n
+
+    CRIE vetor v[1..n] DE INTEIRO
+
+    // Preencher o vetor
+    PARA i DE 1 ATÉ n FAÇA
+        ESCREVA "Digite o elemento ", i, ":"
+        LEIA v[i]
+    FIMPARA
+
+    // Exibir vetor original
+    ESCREVA "Vetor original: "
+    PARA i DE 1 ATÉ n FAÇA
+        ESCREVA v[i], " "
+    FIMPARA
+
+    // Encontrar o valor máximo
+    max <- v[1]
+    PARA i DE 2 ATÉ n FAÇA
+        SE v[i] > max ENTÃO
+            max <- v[i]
+        FIMSE
+    FIMPARA
+
+    // Criar vetor de contagem
+    CRIE vetor count[0..max] DE INTEIRO
+    PARA i DE 0 ATÉ max FAÇA
+        count[i] <- 0
+    FIMPARA
+
+    // Contar frequência dos elementos
+    PARA i DE 1 ATÉ n FAÇA
+        count[v[i]] <- count[v[i]] + 1
+    FIMPARA
+
+    // Recriar o vetor ordenado
+    index <- 1
+    PARA i DE 0 ATÉ max FAÇA
+        ENQUANTO count[i] > 0 FAÇA
+            v[index] <- i
+            index <- index + 1
+            count[i] <- count[i] - 1
+        FIMENQUANTO
+    FIMPARA
+
+    // Exibir vetor ordenado
+    ESCREVA "Vetor ordenado: "
+    PARA i DE 1 ATÉ n FAÇA
+        ESCREVA v[i], " "
+    FIMPARA
+
+FIM
